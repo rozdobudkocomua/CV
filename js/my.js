@@ -37,6 +37,7 @@ $(function () {
         count = 0,
 
         i, j, //Iterators
+        isMobile, isDesktop, isTablet, //Define window
         currentColor; //
 
     //Create list of colors.
@@ -120,27 +121,44 @@ $(function () {
         return count++;
     });
 
+    function detectScreen() {
+        innerW = window.innerWidth;
+        isDesktop = false;
+        isTablet = false;
+        isMobile = false;
+        if (innerW >= 768 && innerW <= 979) {
+            isTablet = true;
+        } else if (innerW > 979) {
+            isDesktop = true;
+        } else {
+            isMobile = true;
+        }
+        return innerW;
+    }
+
+    detectScreen();
+
     //tooltips timer
     setTimeout(func_name, 4000);
     setTimeout(func_photo, 8000);
     setTimeout(func_themes, 12000);
 
+    //Tooltips only for desktop
     function func_name() {
-        if (nameClicked === false) {
+        if (nameClicked === false && isDesktop) {
             $fullName.tooltip('show');
         }
     }
 
     function func_photo() {
-        if (photoClicked === false) {
+        if (photoClicked === false && isDesktop) {
             $photoAva.tooltip('show');
         }
     }
 
     function func_themes() {
-        if (themesClicked === false) {
+        if (themesClicked === false && isDesktop) {
             $sideNav.tooltip('show');
         }
     }
 });
-
